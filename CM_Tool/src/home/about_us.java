@@ -57,6 +57,11 @@ public class about_us extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/git.png"))); // NOI18N
         jLabel2.setText("GitHub");
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/home (3).png"))); // NOI18N
         jLabel3.setText("      EXIT");
@@ -246,6 +251,15 @@ public class about_us extends javax.swing.JFrame {
             System.out.println(err);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        Desktop browser = Desktop.getDesktop();      //link with git hub page
+        try {
+            browser.browse(new URI("https://github.com/y3s1-2020/ITPM_2020_JAN.git"));
+        } catch (Exception err) {
+            System.out.println(err);
+        }
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     /**
      * @param args the command line arguments

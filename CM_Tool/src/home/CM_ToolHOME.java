@@ -670,7 +670,7 @@ public class CM_ToolHOME extends javax.swing.JFrame {
 
         Desktop browser = Desktop.getDesktop();      //link with git hub page
         try {
-            browser.browse(new URI("https://github.com/github"));
+            browser.browse(new URI("https://github.com/y3s1-2020/ITPM_2020_JAN.git"));
         } catch (Exception err) {
             System.out.println(err);
         }
