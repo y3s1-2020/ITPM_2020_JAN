@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ctrlStricture;
+package size_Method_variable;
 
+import ctrlStricture.*;
 import home.CM_ToolHOME;
 import static home.CM_ToolHOME.jDesktopPane1;
 import static home.CM_ToolHOME.path_lbl;
@@ -20,14 +21,14 @@ import javax.swing.table.TableColumnModel;
  *
  * @author anupama
  */
-public class CtrlWeight extends javax.swing.JInternalFrame {
+public class VariableWeight extends javax.swing.JInternalFrame {
 
     CtrlTbl tbl;
     
     /**
      * Creates new form CtrlWeight
      */
-    public CtrlWeight() {
+    public VariableWeight() {
         initComponents();
     }
 
@@ -63,22 +64,22 @@ public class CtrlWeight extends javax.swing.JInternalFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
-        jLabel1.setText("Control Structure type");
+        jLabel1.setText("Program Component");
 
         jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jLabel2.setText("Weight");
 
         jLabel4.setFont(new java.awt.Font("Ubuntu", 0, 15)); // NOI18N
-        jLabel4.setText("A conditional control structure such as an 'if' or 'else-if' condition");
+        jLabel4.setText("Global variable");
 
         jLabel5.setFont(new java.awt.Font("Ubuntu", 0, 15)); // NOI18N
-        jLabel5.setText("Each 'case' statement in a 'switch-case' control structure");
+        jLabel5.setText("Composite data type variable");
 
         jLabel6.setFont(new java.awt.Font("Ubuntu", 0, 15)); // NOI18N
-        jLabel6.setText("The 'switch' statement in a 'switch-case' control structure ");
+        jLabel6.setText("Primitive data type variable");
 
         jLabel7.setFont(new java.awt.Font("Ubuntu", 0, 15)); // NOI18N
-        jLabel7.setText("An iterative control structure such as a 'for', 'while', or 'do-while' loop");
+        jLabel7.setText("Local variable");
 
         jButton2.setText("Save");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -89,11 +90,16 @@ public class CtrlWeight extends javax.swing.JInternalFrame {
 
         jTextField1.setText("2");
 
-        jTextField2.setText("3");
+        jTextField2.setText("1");
 
-        jTextField3.setText("2");
+        jTextField3.setText("1");
 
-        jTextField4.setText("1");
+        jTextField4.setText("2");
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -195,6 +201,10 @@ public class CtrlWeight extends javax.swing.JInternalFrame {
         ctrlStructures();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
     public void ctrlStructures() {
         // get values of weights
         String wtcsIfElse = jTextField1.getText(); // A conditional control structure such as an 'if' or 'else-if' condition
@@ -258,25 +268,25 @@ public class CtrlWeight extends javax.swing.JInternalFrame {
                 String col = String.valueOf(i);
 
                 // A conditional control structure such as an 'if' or 'else-if' condition
-                if (line.contains("if") || line.contains("else if")) {
+                if (line.contains(" if") || line.contains(" else if")) {
                     String[] data = {col, line, wtcsIfElse, nc, ccspps, ccsIfElse};
                     model.addRow(data);
                 }
 
                 // An iterative control structure such as a 'for', 'while', or 'do-while' loop
-                if (line.contains("for") || line.contains("while") || line.contains("do")) {
+                if (line.contains(" for") || line.contains(" while") || line.contains(" do")) {
                     String[] data = {col, line, wtcsForWhile, nc, ccspps, ccsForWhile};
                     model.addRow(data);
                 }
 
                 // The 'switch' statement in a 'switch-case' control structure 
-                if (line.contains("switch")) {
+                if (line.contains(" switch")) {
                     String[] data = {col, line, wtcsSwitch, nc, ccspps, ccsSwitch};
                     model.addRow(data);
                 }
 
                 // Each 'case' statement in a 'switch-case' control structure
-                if (line.contains("case")) {
+                if (line.contains(" case")) {
                     String[] data = {col, line, wtcsCase, nc, ccspps, ccsCase};
                     model.addRow(data);
                 } // Lines without any control structure
@@ -284,8 +294,6 @@ public class CtrlWeight extends javax.swing.JInternalFrame {
                     String[] data = {col, line, nothing, "0", ccspps, ccsNothing};
                     model.addRow(data);
                 }
-                
-                getCtrlTotal();
 
                 // Set column sizes
                 CtrlTbl.jTable1.setAutoResizeMode(CtrlTbl.jTable1.AUTO_RESIZE_NEXT_COLUMN);
@@ -300,15 +308,6 @@ public class CtrlWeight extends javax.swing.JInternalFrame {
         } catch (FileNotFoundException e) {
             System.out.println(e);
         }
-    }
-    
-    public void getCtrlTotal() {
-        int total = 0;
-        for (int i = 0; i < CtrlTbl.jTable1.getRowCount(); i++) {
-            total = total + Integer.parseInt(CtrlTbl.jTable1.getValueAt(i, 5).toString());
-        }
-        
-        CtrlTbl.ctrl_lbl_total.setText(Integer.toString(total));
     }
     
     CM_ToolHOME h;

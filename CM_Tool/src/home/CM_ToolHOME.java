@@ -5,19 +5,23 @@
  */
 package home;
 
+import static Coupling.CouplingMethods.coupling;
 import Coupling.CouplingTbl;
+import Inheritance.InheritanceMethods;
 import Inheritance.InheriteShow_Page;
+import cm_tool.Methods;
+import ctrlStricture.CtrlMethods;
 import ctrlStricture.CtrlTbl;
+import static home.AnalyseMethods.totalComplexity;
+import static home.Analyse.jTable1;
+import static home.Analyse.lbl_total;
 //import size_Method_variable.Size;
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
@@ -27,6 +31,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import size_Method_variable.AllMethods;
+import static size_Method_variable.AllMethods.methods;
+import static size_Method_variable.AllMethods.variables;
 import size_Method_variable.MethodTable;
 import size_Method_variable.SizeTable;
 import size_Method_variable.Variables;
@@ -68,18 +75,17 @@ public class CM_ToolHOME extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         tipFor_lbl = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        Inherit_btn = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
+        btn_size = new javax.swing.JButton();
+        btn_variable = new javax.swing.JButton();
+        btn_method = new javax.swing.JButton();
+        btn_coupling = new javax.swing.JButton();
+        btn_inherit = new javax.swing.JButton();
+        btn_ctrl = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         upload_btn = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         analyise_btn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
@@ -191,11 +197,11 @@ public class CM_ToolHOME extends javax.swing.JFrame {
         jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         jPanel6.setLayout(new java.awt.GridBagLayout());
 
-        jButton7.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
-        jButton7.setText("SIZE");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        btn_size.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
+        btn_size.setText("SIZE");
+        btn_size.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                btn_sizeActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -205,13 +211,13 @@ public class CM_ToolHOME extends javax.swing.JFrame {
         gridBagConstraints.ipady = 17;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(17, 12, 0, 0);
-        jPanel6.add(jButton7, gridBagConstraints);
+        jPanel6.add(btn_size, gridBagConstraints);
 
-        jButton8.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
-        jButton8.setText("VARIABLE");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        btn_variable.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
+        btn_variable.setText("VARIABLE");
+        btn_variable.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                btn_variableActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -221,13 +227,13 @@ public class CM_ToolHOME extends javax.swing.JFrame {
         gridBagConstraints.ipady = 17;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(18, 16, 0, 0);
-        jPanel6.add(jButton8, gridBagConstraints);
+        jPanel6.add(btn_variable, gridBagConstraints);
 
-        jButton9.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
-        jButton9.setText("METHOD");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        btn_method.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
+        btn_method.setText("METHOD");
+        btn_method.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                btn_methodActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -237,13 +243,13 @@ public class CM_ToolHOME extends javax.swing.JFrame {
         gridBagConstraints.ipady = 17;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(18, 16, 0, 0);
-        jPanel6.add(jButton9, gridBagConstraints);
+        jPanel6.add(btn_method, gridBagConstraints);
 
-        jButton10.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
-        jButton10.setText("COUPLING");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        btn_coupling.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
+        btn_coupling.setText("COUPLING");
+        btn_coupling.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                btn_couplingActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -254,13 +260,13 @@ public class CM_ToolHOME extends javax.swing.JFrame {
         gridBagConstraints.ipady = 17;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(18, 16, 0, 16);
-        jPanel6.add(jButton10, gridBagConstraints);
+        jPanel6.add(btn_coupling, gridBagConstraints);
 
-        Inherit_btn.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
-        Inherit_btn.setText("INHERITANCE");
-        Inherit_btn.addActionListener(new java.awt.event.ActionListener() {
+        btn_inherit.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
+        btn_inherit.setText("INHERITANCE");
+        btn_inherit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Inherit_btnActionPerformed(evt);
+                btn_inheritActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -271,13 +277,13 @@ public class CM_ToolHOME extends javax.swing.JFrame {
         gridBagConstraints.ipady = 17;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(18, 16, 0, 16);
-        jPanel6.add(Inherit_btn, gridBagConstraints);
+        jPanel6.add(btn_inherit, gridBagConstraints);
 
-        jButton12.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
-        jButton12.setText("Ctrl  STRUCTURE");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
+        btn_ctrl.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
+        btn_ctrl.setText("Ctrl  STRUCTURE");
+        btn_ctrl.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
+                btn_ctrlActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -288,7 +294,7 @@ public class CM_ToolHOME extends javax.swing.JFrame {
         gridBagConstraints.ipady = 18;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(18, 16, 17, 16);
-        jPanel6.add(jButton12, gridBagConstraints);
+        jPanel6.add(btn_ctrl, gridBagConstraints);
 
         jPanel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
@@ -517,87 +523,29 @@ public class CM_ToolHOME extends javax.swing.JFrame {
     }//GEN-LAST:event_upload_btnActionPerformed
 
     private void analyise_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analyise_btnActionPerformed
-        if (analyse == null) {
-            jDesktopPane1.removeAll();
-            Analyse tbl = new Analyse();
-            jDesktopPane1.add(tbl).setVisible(true);
-        } else {
-            jDesktopPane1.removeAll();
-            jDesktopPane1.add(analyse).setVisible(true);
-        }
-        totalComplexity();
-    }//GEN-LAST:event_analyise_btnActionPerformed
-
-    public void totalComplexity() {
-        // get file path to the uploaded file
-        String filepath = path_lbl.getText();
-
-        File file = new File(filepath);
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String[] colNames = {"#", "Line", "Cs", "Cv", "Cm", "Ci", "Ccp", "Ccs", "TCps"};
-        
-            DefaultTableModel model = (DefaultTableModel) Analyse.jTable1.getModel();
-            model.setColumnIdentifiers(colNames);
-
-            Object[] lines = br.lines().toArray();
-            
-            // read the file line by line and check for the control structures
-            for (int i = 1; i <= lines.length; i++) {
-                String line = lines[i].toString();
-
-                String col = String.valueOf(i);
-                
-                int size = Integer.parseInt(Methods.totalComplexityDueToSize(line)); // total complexity due to size
-                int variables = Integer.parseInt(Methods.totalComplexityDueToVariables(line)); // total complexity due to variables
-                int methods = Integer.parseInt(Methods.totalComplexityDueToMethods(line)); // total complexity due to methods
-                int inheritance = Integer.parseInt(Methods.totalComplexityDueToInheritance(line)); // total complexity due to inheritance
-                int coupling = Integer.parseInt(Methods.totalComplexityDueToCoupling(line)); // total complexity due to coupling
-                int ctrl = Integer.parseInt(Methods.totalComplexityDueToCtrlStructures(line)); // total complexity due to control structures 
-                
-                String total = String.valueOf(size + variables + methods + inheritance + coupling + ctrl);
-                
-                String[] data = {col, line,
-                    Methods.totalComplexityDueToSize(line),
-                    Methods.totalComplexityDueToVariables(line),
-                    Methods.totalComplexityDueToMethods(line),
-                    Methods.totalComplexityDueToInheritance(line),
-                    Methods.totalComplexityDueToCoupling(line),
-                    Methods.totalComplexityDueToCtrlStructures(line),
-                    total// total complexity
-                };
-                
-                model.addRow(data);
-                
-                // Set column sizes
-                Analyse.jTable1.setAutoResizeMode(Analyse.jTable1.AUTO_RESIZE_NEXT_COLUMN);
-                TableColumnModel colModel = Analyse.jTable1.getColumnModel();
-                colModel.getColumn(0).setPreferredWidth(35);
-                colModel.getColumn(1).setPreferredWidth(300);
-                colModel.getColumn(2).setPreferredWidth(35);
-                colModel.getColumn(3).setPreferredWidth(35);
-                colModel.getColumn(4).setPreferredWidth(35);
-                colModel.getColumn(5).setPreferredWidth(35);
-                colModel.getColumn(6).setPreferredWidth(35);
-                colModel.getColumn(7).setPreferredWidth(35);
-                colModel.getColumn(8).setPreferredWidth(35);
-            }
-        } catch (Exception e) {
-        }
-    }
-
-    private void Inherit_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Inherit_btnActionPerformed
-
         String fullcode = jTextArea1.getText();
-        String combo = jComboBox1.getSelectedItem().toString(); //get Combobox selected item value to the variable
-        int total = 0;
-
+        
+        if (fullcode.isEmpty()) {     //check weather jtext area empty or not
+            JFrame f = new JFrame();
+            JOptionPane.showMessageDialog(f, "You should import a Text File for the text area !");
+            if (analyse == null) {
+                jDesktopPane1.removeAll();
+                Analyse tbl = new Analyse();
+                jDesktopPane1.add(tbl).setVisible(true);
+            } else {
+                jDesktopPane1.removeAll();
+                jDesktopPane1.add(analyse).setVisible(true);
+            }
+            totalComplexity();
+        }
+    }//GEN-LAST:event_analyise_btnActionPerformed
+   
+    private void btn_inheritActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inheritActionPerformed
+        String fullcode = jTextArea1.getText();
         if (fullcode.isEmpty()) {     //chack wather jtext area empty or not
             JFrame f = new JFrame();
             JOptionPane.showMessageDialog(f, "You should import a Text File for the text area !");
         } else {
-
             if (in == null) {           //displaying the table inside the jDesktop pane
                 jDesktopPane1.removeAll();
                 InheriteShow_Page i = new InheriteShow_Page();
@@ -608,63 +556,12 @@ public class CM_ToolHOME extends javax.swing.JFrame {
 
             }
 
-            if (combo.equals("C++")) {  //Chack using the combo box
-
-                //int total = 1;
-                //Complexity due to Inheritance of a C++ code
-                
-                Pattern p1 = Pattern.compile(" : public");
-                Matcher m1 = p1.matcher(fullcode);
-
-                Pattern p8 = Pattern.compile(" : protected");
-                Matcher m8 = p8.matcher(fullcode);
-
-                Pattern p9 = Pattern.compile(" : private");
-                Matcher m9 = p9.matcher(fullcode);
-
-                Pattern p10 = Pattern.compile(" : abstract");
-                Matcher m10 = p10.matcher(fullcode);
-
-                Pattern p11 = Pattern.compile(" : static");
-                Matcher m11 = p11.matcher(fullcode);
-
-                Pattern p12 = Pattern.compile(" : final");
-                Matcher m12 = p12.matcher(fullcode);
-
-                Pattern p13 = Pattern.compile(" : synchronized");
-                Matcher m13 = p13.matcher(fullcode);
-
-                Pattern p14 = Pattern.compile(" : volatile");
-                Matcher m14 = p14.matcher(fullcode);
-
-                while (m1.find() | m8.find() | m9.find() | m10.find() | m11.find() | m12.find() | m13.find() | m14.find()) {  //C++ child found
-                    total = total + 1;
-                    System.out.println(" c++ complexity due to inheritance : " + total);
-
-                }
-
-            } else {
-                //Complexity due to Inheritance of a Java code
-                Pattern p2 = Pattern.compile(" extends ");
-                Matcher m2 = p2.matcher(fullcode);
-
-                while (m2.find()) {   //Java child found
-
-                    total = total + 1;
-                    System.out.println("java complexity due to inheritance : " + total);
-
-                }
-
-            }
+            InheritanceMethods.inheritance();
+            
             //Displying the tip 
             tipFor_lbl.setText("Total inheritances (Ti) = No of direct inheritances (Ndi) + No of indirect inheritances (Nidi)");
-
-            //Table create
-            // DefaultTableModel model = 
         }
-
-
-    }//GEN-LAST:event_Inherit_btnActionPerformed
+    }//GEN-LAST:event_btn_inheritActionPerformed
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
 
@@ -684,32 +581,31 @@ public class CM_ToolHOME extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Code Area refreshed");
     }//GEN-LAST:event_jLabel3MouseClicked
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void btn_sizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sizeActionPerformed
 
         String fullcode = jTextArea1.getText();
-        String combo = jComboBox1.getSelectedItem().toString();
 
         if (fullcode.isEmpty()) {     //chack wather jtext area empty or not
             JFrame f = new JFrame();
             JOptionPane.showMessageDialog(f, "You should import a Text File for the text area !");
         } else {
             if (in == null) {           //creating the table inside the jDesktoppane
-
                 jDesktopPane1.removeAll();
                 SizeTable st = new SizeTable();
                 jDesktopPane1.add(st).setVisible(true);
             } else {
                 jDesktopPane1.removeAll();
                 jDesktopPane1.add(in).setVisible(true);
-
             }
-
+            
+            AllMethods.sizeMethod();
+            
+            // show the calculation
+            tipFor_lbl.setText("Cs = (Wkw * Nkw) + (Wid * Nid) + (Wop * Nop) + (Wnv * Nnv) + (Wsl * Nsl)");
         }
+    }//GEN-LAST:event_btn_sizeActionPerformed
 
-
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+    private void btn_couplingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_couplingActionPerformed
         String fullcode = jTextArea1.getText();
         if (fullcode.isEmpty()) {
             JFrame f = new JFrame();
@@ -724,9 +620,14 @@ public class CM_ToolHOME extends javax.swing.JFrame {
                 jDesktopPane1.removeAll();
                 jDesktopPane1.add(cop).setVisible(true);
             }
-    }//GEN-LAST:event_jButton10ActionPerformed
-    }
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+            
+            coupling();
+            
+            tipFor_lbl.setText("Ccp = (Wr * Nr) + (Wmcms * Nmcms) + (Wmcmd * Nmcmd) + (Wmcrms * Nmcrms) + (Wmcrmd * Nmcrmd) + (Wrmcrms * Nrmcrms) + (Wrmcrmd *Nrmcrmd) + (Wrmcms * Nrmcms) + (Wrmcmd * Nrmcmd) + (Wmrgvs *Nmrgvs) + (Wmrgvd * Nmrgvd) + (Wrmrgvs * Nrmrgvs) + (Wrmrgvd * Nrmrgvd)");
+        }
+    }//GEN-LAST:event_btn_couplingActionPerformed
+
+    private void btn_ctrlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ctrlActionPerformed
 
         String fullcode = jTextArea1.getText();
         if (fullcode.isEmpty()) {
@@ -742,117 +643,14 @@ public class CM_ToolHOME extends javax.swing.JFrame {
                 jDesktopPane1.removeAll();
                 jDesktopPane1.add(ctrl).setVisible(true);
             }
-            ctrlStructures();
+            CtrlMethods.ctrlStructures();
+            
+            // Show the calculation
+            tipFor_lbl.setText("Ccs = (Wtcs * NC) + Ccspps");
         }
-    }
+    }//GEN-LAST:event_btn_ctrlActionPerformed
 
-    public void ctrlStructures() {
-        // Show the calculation
-        tipFor_lbl.setText("Ccs = (Wtcs * NC) + Ccspps");
-        
-        // number of conditions in single line
-        int count = 1;
-        
-        // Weights for each control structure
-        int forIfElse = 2;
-        int forForWhile = 3;
-        int forSwitch = 2;
-        int forCase = 1;
-        int noCtrl = 0;
-        
-        // complexity of previous program
-        int previous = 0;
-        
-        // calculate ccs
-        int valIfElse = forIfElse * count;
-        int valForWhile = forForWhile * count;
-        int valSwitch = forSwitch * count;
-        int valCase = forCase * count;
-        int valNothing = noCtrl * count;
-        
-        // convert that values into string
-        String nc = String.valueOf(count);
-        String wtcsIfElse = String.valueOf(forIfElse);
-        String wtcsForWhile = String.valueOf(forForWhile);
-        String wtcsSwitch = String.valueOf(forSwitch);
-        String wtcsCase = String.valueOf(forCase);
-        String nothing = String.valueOf(noCtrl);
-        String ccspps = String.valueOf(previous);
-        
-        // convert calculated values into string
-        String ccsIfElse = String.valueOf(valIfElse);
-        String ccsForWhile = String.valueOf(valForWhile);
-        String ccsSwitch = String.valueOf(valSwitch);
-        String ccsCase = String.valueOf(valCase);
-        String ccsNothing = String.valueOf(valNothing);
-        
-        // get file path to the uploaded file
-        String filepath = path_lbl.getText();
-
-        File file = new File(filepath);
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-
-            // give the table header
-            String[] colNames = {"#", "Line", "Wtcs", "NC", "Ccspps", "Ccs"};
-
-            DefaultTableModel model = (DefaultTableModel) CtrlTbl.jTable1.getModel();
-
-            model.setColumnIdentifiers(colNames);
-
-            Object[] lines = br.lines().toArray();
-
-            // read the file line by line and check for the control structures
-            for (int i = 1; i <= lines.length; i++) {
-                String line = lines[i].toString();
-
-                String col = String.valueOf(i);
-
-                // A conditional control structure such as an 'if' or 'else-if' condition
-                if (line.contains(" if") || line.contains(" else if")) {
-                    String[] data = {col, line, wtcsIfElse, nc, ccspps, ccsIfElse};
-                    model.addRow(data);
-                }
-
-                // An iterative control structure such as a 'for', 'while', or 'do-while' loop
-                if (line.contains(" for") || line.contains(" while") || line.contains(" do")) {
-                    String[] data = {col, line, wtcsForWhile, nc, ccspps, ccsForWhile};
-                    model.addRow(data);
-                }
-
-                // The 'switch' statement in a 'switch-case' control structure 
-                if (line.contains(" switch")) {
-                    String[] data = {col, line, wtcsSwitch, nc, ccspps, ccsSwitch};
-                    model.addRow(data);
-                }
-
-                // Each 'case' statement in a 'switch-case' control structure
-                if (line.contains(" case")) {
-                    String[] data = {col, line, wtcsCase, nc, ccspps, ccsCase};
-                    model.addRow(data);
-                } // Lines without any control structure
-                else {
-                    String[] data = {col, line, nothing, "0", ccspps, ccsNothing};
-                    model.addRow(data);
-                }
-
-                // Set column sizes
-                CtrlTbl.jTable1.setAutoResizeMode(CtrlTbl.jTable1.AUTO_RESIZE_NEXT_COLUMN);
-                TableColumnModel colModel = CtrlTbl.jTable1.getColumnModel();
-                colModel.getColumn(0).setPreferredWidth(25);
-                colModel.getColumn(1).setPreferredWidth(400);
-                colModel.getColumn(2).setPreferredWidth(35);
-                colModel.getColumn(3).setPreferredWidth(25);
-                colModel.getColumn(4).setPreferredWidth(50);
-                colModel.getColumn(5).setPreferredWidth(25);
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println(e);
-        }
-    }//GEN-LAST:event_jButton12ActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void btn_variableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_variableActionPerformed
 
         String fullcode = jTextArea1.getText();
         if (fullcode.isEmpty()) {
@@ -870,13 +668,13 @@ public class CM_ToolHOME extends javax.swing.JFrame {
             }
             variables();
 
+            tipFor_lbl.setText("Cv = Wvs [(Wpdtv * Npdtv) + (Wcdtv * Ncdtv)]");
         }
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_btn_variableActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+    private void btn_methodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_methodActionPerformed
 
         String fullcode = jTextArea1.getText();
-        String combo = jComboBox1.getSelectedItem().toString();
 
         if (fullcode.isEmpty()) {     //chack wather jtext area empty or not
             JFrame f = new JFrame();
@@ -893,114 +691,11 @@ public class CM_ToolHOME extends javax.swing.JFrame {
 
             }
 
+            methods();
+            
+            tipFor_lbl.setText("Cm = Wmrt + (Wpdtp * Npdtp) + (Wcdtp * Ncdtp)");
         }
-    }//GEN-LAST:event_jButton9ActionPerformed
-
-    public void variables() {
-        DefaultTableModel model = (DefaultTableModel) Variables.jTable1.getModel();
-
-        String[] cols = {"No", "Code", "Wvs", "Wpdtv", "Npdtv", "Wcdtv", "Ncdtv", "Cv"};
-        String[][] data = {
-            {"1", "import java.util.Scanner;", "0", "0", "0", "0", "0", "0"},
-            {"2", " class Years{", "0", "0", "0", "0", "0", "0"},
-            {"3", "   public int getYear(){", "0", "0", "0", "0", "0", "0"},
-            {"4", "	int year;", "1", "1", "1", "0", "0", "1"},
-            {"5", "	String enteredYear;", "1", "1", "1", "0", "0", "1"},
-            {"6", "	Scanner sc = new Scanner(System.in);", "0", "0", "0", "0", "0", "0"},
-            {"7", "	System.out.println(\"Enter the year as a number :\");", "0", "0", "0", "0", "0", "0"},
-            {"8", "	enteredYear = sc.next();", "1", "1", "1", "0", "0", "1"},
-            {"9", "	year = Integer.parseInt(enteredYear);", "1", "1", "2", "0", "0", "2"},
-            {"10", "	return year;", "1", "1", "1", "0", "0", "1"},
-            {"11", "   }", "0", "0", "0", "0", "0", "0"},
-            {"12", " }", "0", "0", "0", "0", "0", "0"},
-            {"13", "//------------------------------------------------------------------------------------------------------------------------------------", "0", "0", "0", "0", "0", "0"},
-            {"14", " class Months extends Years{", "0", "0", "0", "0", "0", "0"},
-            {"15", "   public int getMonth(){", "0", "0", "0", "0", "0", "0"},
-            {"16", "	int month;", "1", "1", "1", "0", "0", "1"},
-            {"17", "    String enteredMonthNumber;", "1", "1", "1", "0", "0", "1"},
-            {"18", "    Scanner sc = new Scanner(System.in);", "0", "0", "0", "0", "0", "0"},
-            {"19", "    System.out.println(\"Enter the month number :\");", "0", "0", "0", "0", "0", "0"},
-            {"20", "    enteredMonthNumber = sc.next();", "1", "1", "1", "0", "0", "1"},
-            {"21", "    month = Integer.parseInt(enteredMonthNumber);", "1", "1", "2", "0", "0", "2"},
-            {"22", "    return month;", "1", "1", "1", "0", "0", "1"},
-            {"23", "   }", "0", "0", "0", "0", "0", "0"},
-            {"24", " }", "0", "0", "0", "0", "0", "0"},
-            {"25", "//------------------------------------------------------------------------------------------------------------------------------------", "0", "0", "0", "0", "0", "0"},
-            {"26", "class DaysPerMonth extends Months{", "0", "0", "0", "0", "0", "0"},
-            {"27", " static int numDays = 0;", "1", "1", "1", "0", "0", "1"},
-            {"28", " public static void main(String[] args) {", "0", "0", "0", "0", "0", "0"},
-            {"29", "    int year;", "1", "1", "1", "0", "0", "1"},
-            {"30", "    Months m = new Months();", "0", "0", "0", "0", "0", "0"},
-            {"31", "    int month = m.getMonth();", "1", "1", "1", "0", "0", "1"},
-            {"32", " ", "0", "0", "0", "0", "0", "0"},
-            {"33", "    if((month < 1) || (month > 12)){", "0", "0", "0", "0", "0", "0"},
-            {"34", "      System.out.println(\"Kindly enter a number between 0 to 13.\");", "0", "0", "0", "0", "0", "0"},
-            {"35", "    }", "0", "0", "0", "0", "0", "0"},
-            {"36", "    else {", "0", "0", "0", "0", "0", "0"},
-            {"37", "     switch (month) {", "0", "0", "0", "0", "0", "0"},
-            {"38", "        case 1:", "0", "0", "0", "0", "0", "0"},
-            {"39", "        case 3:", "0", "0", "0", "0", "0", "0"},
-            {"40", "        case 5:", "0", "0", "0", "0", "0", "0"},
-            {"41", "        case 7:", "0", "0", "0", "0", "0", "0"},
-            {"42", "        case 8:", "0", "0", "0", "0", "0", "0"},
-            {"43", "        case 10:", "0", "0", "0", "0", "0", "0"},
-            {"44", "        case 12:", "0", "0", "0", "0", "0", "0"},
-            {"45", "          numDays = 31;", "0", "0", "0", "0", "0", "0"},
-            {"46", "          System.out.println(\"Month \" + month + \" consists of \" + numDays + \" days.\");", "0", "0", "0", "0", "0", "0"},
-            {"47", "          break;", "0", "0", "0", "0", "0", "0"},
-            {"48", "        case 4:", "0", "0", "0", "0", "0", "0"},
-            {"49", "        case 6:", "0", "0", "0", "0", "0", "0"},
-            {"50", "        case 9:", "0", "0", "0", "0", "0", "0"},
-            {"51", "        case 11:", "0", "0", "0", "0", "0", "0"},
-            {"52", "          numDays = 30;", "0", "0", "0", "0", "0", "0"},
-            {"53", "          System.out.println(\"Month \" + month + \" consists of \" + numDays + \" days.\");", "0", "0", "0", "0", "0", "0"},
-            {"54", "          break;", "0", "0", "0", "0", "0", "0"},
-            {"55", "        case 2:", "0", "0", "0", "0", "0", "0"},
-            {"56", "          year = m.getYear();", "0", "0", "0", "0", "0", "0"},
-            {"57", "          if(year < 1) {", "0", "0", "0", "0", "0", "0"},
-            {"58", "            System.out.println(\"Kindly enter a valid year.\");", "0", "0", "0", "0", "0", "0"},
-            {"59", "          }", "0", "0", "0", "0", "0", "0"},
-            {"60", "          else{", "0", "0", "0", "0", "0", "0"},
-            {"61", "            if(((year % 4 == 0) &&  !(year % 100 == 0)) || (year % 400 == 0)){", "0", "0", "0", "0", "0", "0"},
-            {"62", "              numDays = 29;", "0", "0", "0", "0", "0", "0"},
-            {"63", "            if(year > 2020){", "0", "0", "0", "0", "0", "0"},
-            {"64", "              System.out.println(\"In year \" + year + \" month \" + month + \" will consist of \" + numDays + \" days.\");", "0", "0", "0", "0", "0", "0"},
-            {"65", "            }", "0", "0", "0", "0", "0", "0"},
-            {"66", "            else{", "0", "0", "0", "0", "0", "0"},
-            {"67", "              System.out.println(\"In year \" + year + \" month \" + month + \" has consisted of \" + numDays + \" days.\");", "0", "0", "0", "0", "0", "0"},
-            {"68", "            }", "0", "0", "0", "0", "0", "0"},
-            {"69", "          }//if at line 61", "0", "0", "0", "0", "0", "0"},
-            {"70", "          else{", "0", "0", "0", "0", "0", "0"},
-            {"71", "            numDays = 28;", "0", "0", "0", "0", "0", "0"},
-            {"72", "            if (year > 2020){", "0", "0", "0", "0", "0", "0"},
-            {"73", "              System.out.println(\"In year \" + year + \" month \" + month + \" will consist of \" + numDays + \" days.\");", "0", "0", "0", "0", "0", "0"},
-            {"74", "            }", "0", "0", "0", "0", "0", "0"},
-            {"75", "            else{", "0", "0", "0", "0", "0", "0"},
-            {"76", "              System.out.println(\"In year \" + year + \" month \" + month + \" has consisted of \" + numDays + \" days.\");", "0", "0", "0", "0", "0", "0"},
-            {"77", "            }", "0", "0", "0", "0", "0", "0"},
-            {"78", "            break;", "0", "0", "0", "0", "0", "0"},
-            {"79", "          }//else at line 70", "0", "0", "0", "0", "0", "0"},
-            {"80", "        }//else at line 60", "0", "0", "0", "0", "0", "0"},
-            {"81", "      }//switch at line 37", "0", "0", "0", "0", "0", "0"},
-            {"82", "    }//else at line 36", "0", "0", "0", "0", "0", "0"},
-            {"83", "  }//method", "0", "0", "0", "0", "0", "0"},
-            {"84", "}//class", "0", "0", "0", "0", "0", "0"}
-        };
-
-        model.setDataVector(data, cols);
-
-        Variables.jTable1.setAutoResizeMode(Variables.jTable1.AUTO_RESIZE_NEXT_COLUMN);
-        TableColumnModel colModel = Variables.jTable1.getColumnModel();
-        colModel.getColumn(0).setPreferredWidth(25);
-        colModel.getColumn(1).setPreferredWidth(290);
-        colModel.getColumn(2).setPreferredWidth(35);
-        colModel.getColumn(3).setPreferredWidth(45);
-        colModel.getColumn(4).setPreferredWidth(45);
-        colModel.getColumn(5).setPreferredWidth(45);
-        colModel.getColumn(6).setPreferredWidth(45);
-        colModel.getColumn(7).setPreferredWidth(25);
-
-    }
+    }//GEN-LAST:event_btn_methodActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1047,13 +742,13 @@ public class CM_ToolHOME extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Abouthus;
-    private javax.swing.JButton Inherit_btn;
     private javax.swing.JButton analyise_btn;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JButton btn_coupling;
+    private javax.swing.JButton btn_ctrl;
+    private javax.swing.JButton btn_inherit;
+    private javax.swing.JButton btn_method;
+    private javax.swing.JButton btn_size;
+    private javax.swing.JButton btn_variable;
     public static javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     public static javax.swing.JDesktopPane jDesktopPane1;
@@ -1073,7 +768,7 @@ public class CM_ToolHOME extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextArea jTextArea1;
+    public static final javax.swing.JTextArea jTextArea1 = new javax.swing.JTextArea();
     public static javax.swing.JLabel path_lbl;
     private javax.swing.JLabel tipFor_lbl;
     private javax.swing.JButton upload_btn;

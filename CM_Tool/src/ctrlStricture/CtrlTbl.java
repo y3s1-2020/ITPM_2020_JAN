@@ -5,7 +5,9 @@
  */
 package ctrlStricture;
 
+import home.Analyse;
 import static home.CM_ToolHOME.jDesktopPane1;
+import static home.AnalyseMethods.totalComplexity;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -19,6 +21,7 @@ import javax.swing.JOptionPane;
 public class CtrlTbl extends javax.swing.JInternalFrame {
 
     CtrlWeight weight;
+    Analyse analyse;
     
     /**
      * Creates new form Anupama
@@ -33,7 +36,7 @@ public class CtrlTbl extends javax.swing.JInternalFrame {
             total = total + Integer.parseInt(jTable1.getValueAt(i, 5).toString());
         }
         
-        lbl_total.setText(Integer.toString(total));
+        ctrl_lbl_total.setText(Integer.toString(total));
     }
 
     /**
@@ -48,7 +51,6 @@ public class CtrlTbl extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        lbl_total = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -75,7 +77,7 @@ public class CtrlTbl extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jLabel1.setText("Total code complexity due to control structures : ");
 
-        lbl_total.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        ctrl_lbl_total.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
 
         jButton1.setText("Total complexity");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -98,15 +100,15 @@ public class CtrlTbl extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ctrl_lbl_total, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(6, 6, 6))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lbl_total, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnChng)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2)))
@@ -118,16 +120,15 @@ public class CtrlTbl extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnChng)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbl_total, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(jButton1)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(ctrl_lbl_total, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         pack();
@@ -148,8 +149,15 @@ public class CtrlTbl extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnChngActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        getTotal();
+        if (analyse == null) {
+            jDesktopPane1.removeAll();
+            Analyse tbl = new Analyse();
+            jDesktopPane1.add(tbl).setVisible(true);
+        } else {
+            jDesktopPane1.removeAll();
+            jDesktopPane1.add(analyse).setVisible(true);
+        }
+        totalComplexity();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -185,11 +193,11 @@ public class CtrlTbl extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static final javax.swing.JButton btnChng = new javax.swing.JButton();
+    public static final javax.swing.JLabel ctrl_lbl_total = new javax.swing.JLabel();
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable jTable1;
-    private javax.swing.JLabel lbl_total;
     // End of variables declaration//GEN-END:variables
 }

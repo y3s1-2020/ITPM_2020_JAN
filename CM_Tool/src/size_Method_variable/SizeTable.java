@@ -5,6 +5,9 @@
  */
 package size_Method_variable;
 
+import ctrlStricture.CtrlWeight;
+import static home.CM_ToolHOME.jDesktopPane1;
+
 /**
  *
  * @author yelan
@@ -29,11 +32,12 @@ public class SizeTable extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
 
         setClosable(true);
-        setMaximumSize(new java.awt.Dimension(793, 486));
-        setMinimumSize(new java.awt.Dimension(793, 486));
-        setPreferredSize(new java.awt.Dimension(793, 486));
+        setMaximumSize(new java.awt.Dimension(699, 547));
+        setMinimumSize(new java.awt.Dimension(699, 547));
+        setPreferredSize(new java.awt.Dimension(699, 547));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -126,24 +130,57 @@ public class SizeTable extends javax.swing.JInternalFrame {
                 "Line No", "Program Statement", "Nkw", "Nid", "Nop", "Nnv", "Nsl", "Cs"
             }
         ));
+        jTable1.setMaximumSize(new java.awt.Dimension(0, 0));
+        jTable1.setMinimumSize(new java.awt.Dimension(0, 0));
+        jTable1.setPreferredSize(new java.awt.Dimension(699, 547));
         jScrollPane1.setViewportView(jTable1);
+
+        jButton2.setText("Change weights");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1254, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 733, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (weight == null) {
+            jDesktopPane1.removeAll();
+            SizeWeight tbl = new SizeWeight();
+            jDesktopPane1.add(tbl).setVisible(true);
+            this.setVisible(false);
+        } else {
+            jDesktopPane1.removeAll();
+            jDesktopPane1.add(weight).setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    SizeWeight weight;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
