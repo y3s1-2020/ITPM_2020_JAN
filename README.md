@@ -25,9 +25,9 @@ CM_Tool is a code complexity measuring tool.It allows to upload and measure the 
               
 01.Size Factor
 
-       * Size factor measures the code complexity of a software based on some program components such as number of keywords, number of            identifiers, number of operators, number of numerical values and number of string literals accordingly.
+       * Size factor measures the code complexity of a software based on some program components such as number of keywords, number of   identifiers, number of operators, number of numerical values and number of string literals accordingly.
         
-       * Each program component carries a defaultly set weight, which is also allowed to be changed by the user as they wish by giving            keyboard inputs for the weights.
+       * Each program component carries a defaultly set weight, which is also allowed to be changed by the user as they wish by giving   keyboard inputs for the weights.
        
        * The complexities of the files are shown in a ' tabular ' format.
        
