@@ -5,7 +5,6 @@
  */
 package size_Method_variable;
 
-import ctrlStricture.CtrlTbl;
 import home.CM_ToolHOME;
 import static home.CM_ToolHOME.path_lbl;
 import java.io.BufferedReader;
@@ -27,6 +26,122 @@ import javax.swing.table.TableColumnModel;
 public class AllMethods {
 
     public static void variables() {
+        //Default weights for each weight component
+        int Wvs = 0;
+        int Wpdtv = 1;
+        int Wcdtv = 2;
+        
+        //Number of variable components
+        int Npdtv = 0;
+        int Ncdtv = 0;
+        
+        int Cv = 0;
+        
+        //Calculate weights for each variable component
+       
+        //Getting the filepath
+        String filepath = path_lbl.getText();
+        
+        File file = new File(filepath);
+        
+        try {
+            
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            
+             // give the table header
+            String[] colNames = {"#", "Line", "Wvs", "Npdtv", "Ncdtv", "Cv"};
+            
+            DefaultTableModel model = (DefaultTableModel) Variables.jTable1.getModel();
+            
+            model.setColumnIdentifiers(colNames);
+             
+            Object[] lines = br.lines().toArray();
+            
+            //Reading the file line by line
+            for (int i = 0; i <= lines.length; i++)
+            {
+                String line = lines[i].toString();
+                
+                String col = String.valueOf(i);
+                
+                String [] crrline = line.split(" ");
+                StringTokenizer token = new StringTokenizer(line);
+                
+                while(token.hasMoreTokens())
+                {
+                    String word = token.nextToken();
+                    
+                    //Checking if variable is local
+                    if(word.equals("private"))
+                    {
+                        Wvs = 1;
+                        
+                        //Checking if varibale is primitive
+                        if(word.equals("boolean") || word.equals("char") || word.equals("byte") || word.equals("short") || word.equals("int") || word.equals("long") || word.equals("float") || word.equals("double"))
+                        {
+                            Npdtv = Npdtv +1;
+                        }
+                        //Checking if variable is composite
+                        else if(word.equals("char[]") || word.equals("byte[]") || word.equals("short[]") || word.equals("int[]") || word.equals("long[]") || word.equals("float[]") || word.equals("double[]") || word.equals("ArrayList") || word.equals("LinkedList") || word.equals("Stack") || word.equals("HashTable") || word.equals("HashSet") || word.equals("HashTree"))
+                        {
+                            Ncdtv = Ncdtv + 1;
+                        }
+                    }
+                    
+                    else if (word.equals("public")) //Checking if variable is global
+                    {
+                        Wvs = 2;
+                         
+                         //Checking if varibale is primitive
+                        if(word.equals("boolean") || word.equals("char") || word.equals("byte") || word.equals("short") || word.equals("int") || word.equals("long") || word.equals("float") || word.equals("double"))
+                        {
+                            Npdtv = Npdtv +1;
+                        }
+                        //Checking if variable is composite
+                        else if(word.equals("char[]") || word.equals("byte[]") || word.equals("short[]") || word.equals("int[]") || word.equals("long[]") || word.equals("float[]") || word.equals("double[]") || word.equals("ArrayList") || word.equals("LinkedList") || word.equals("Stack") || word.equals("HashTable") || word.equals("HashSet") || word.equals("HashTree"))
+                        {
+                            Ncdtv = Ncdtv + 1;
+                        }
+                    }
+                
+                    Cv = Wvs * ((Wpdtv * Npdtv) + (Wcdtv * Ncdtv));
+                }
+        
+                //Converts number of variable components to string
+                String sNpdtv = String.valueOf(Npdtv);
+                String sNcdtv = String.valueOf(Ncdtv);
+                String sWvs = String.valueOf(Wvs);
+                String sCv = String.valueOf(Cv);
+   
+                String[] data = {col, line, sWvs, sNpdtv, sNcdtv, sCv};
+                model.addRow(data);
+                
+                Npdtv = 0; Ncdtv = 0; Wvs = 0;
+                
+                getVariableTotal();
+                
+                // Set column sizes
+                Variables.jTable1.setAutoResizeMode(Variables.jTable1.AUTO_RESIZE_NEXT_COLUMN);
+                TableColumnModel colModel = Variables.jTable1.getColumnModel();
+                colModel.getColumn(0).setPreferredWidth(25);
+                colModel.getColumn(1).setPreferredWidth(400);
+                colModel.getColumn(2).setPreferredWidth(35);
+                colModel.getColumn(3).setPreferredWidth(35);
+                colModel.getColumn(4).setPreferredWidth(35);
+                colModel.getColumn(5).setPreferredWidth(35);
+            }     
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(CM_ToolHOME.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void getVariableTotal() {
+        int total = 0;
+        for (int i = 0; i < Variables.jTable1.getRowCount(); i++) {
+            total = total + Integer.parseInt(Variables.jTable1.getValueAt(i, 5).toString());
+        }
+        
+        Variables.lbl_total_var.setText(Integer.toString(total));
     }
 
     public static void sizeMethod() {
@@ -118,6 +233,14 @@ public class AllMethods {
                     if (word.equals("[0-9]")) {
                         Nnv = Nnv + 1;
                     }
+
+                    //Finding string literals
+                    Pattern p3 = Pattern.compile("\"([^\"]*)\"");
+                    Matcher m3 = p3.matcher(word);
+
+                    while (m3.find()) {//String between double quotes found
+                        Nsl = Nsl + 1;
+                    }
                     
                     //Calculate weight for each component
                     int valWkw = Wkw * Nkw;
@@ -127,14 +250,6 @@ public class AllMethods {
                     int valWsl = Wsl * Nsl;                    
 
                     Cs = valWkw + valWid + valWop + valWnv + valWsl;
-
-                    //Finding string literals
-                    Pattern p3 = Pattern.compile("\"([^\"]*)\"");
-                    Matcher m3 = p3.matcher(word);
-
-                    while (m3.find()) {//String between double quotes found
-                        Nsl = Nsl + 1;
-                    }
 
                 }
 
@@ -180,5 +295,103 @@ public class AllMethods {
     }
 
     public static void methods() {
+        //Default weights for each method component
+        int Wmrt = 0;
+        int Wpdtp = 1;
+        int Wcdtp = 2;
+        int Cm = 0;
+        
+        //No of method compoenents
+        int Npdtp = 0;
+        int Ncdtp = 0;
+        
+        //Getting the filepath
+        String filepath = path_lbl.getText();
+        
+        File file = new File(filepath);
+        
+        try {
+            
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            
+             // give the table header
+            String[] colNames = {"#", "Line", "Wmrt", "Npdtp", "Ncdtp", "Cm"};
+            
+            DefaultTableModel model = (DefaultTableModel) MethodTable.jTable1.getModel();
+            
+            model.setColumnIdentifiers(colNames);
+             
+            Object[] lines = br.lines().toArray();
+            
+            //Reading the file line by line
+            for (int i = 0; i <= lines.length; i++)
+            {
+                String line = lines[i].toString();
+                
+                String col = String.valueOf(i);
+                
+                String [] crrline = line.split(" ");
+                StringTokenizer token = new StringTokenizer(line);
+                
+                //Reading word by word
+                while(token.hasMoreTokens())
+                {
+                    
+                    String word = token.nextToken();
+
+                    //Finding class identifiers
+                    if(word.equals("public") || word.equals("private")&& word.equals("void"))
+                    {
+                        Wmrt = 0;
+                    }
+                    
+                    if(word.equals("public") || word.equals("private")&& word.equals("boolean") || word.equals("char") || word.equals("byte") || word.equals("short") || word.equals("int") || word.equals("long") || word.equals("float") || word.equals("double"))
+                    {
+                        Npdtp = Npdtp + 1;
+                    }
+                    
+                    if(word.equals("public") || word.equals("private") && word.equals("char[]") || word.equals("byte[]") || word.equals("short[]") || word.equals("int[]") || word.equals("long[]") || word.equals("float[]") || word.equals("double[]") || word.equals("ArrayList") || word.equals("LinkedList") || word.equals("Stack") || word.equals("HashTable") || word.equals("HashSet") || word.equals("HashTree"))
+                    {
+                        Ncdtp = Ncdtp + 1;
+                    }
+                
+                    Cm = Wmrt + (Wpdtp * Npdtp) + (Wcdtp * Ncdtp);
+                }
+        
+                //Convert number of method components to string
+                String sWmrt = String.valueOf(Wmrt);
+                String sNpdtp = String.valueOf(Npdtp);
+                String sNcdtp = String.valueOf(Ncdtp);
+                String sCm = String.valueOf(Cm);
+                
+                String[] data = {col, line, sWmrt, sNpdtp, sNcdtp, sCm};
+                model.addRow(data);
+                
+                Wmrt = 0; Npdtp = 0; Ncdtp = 0;
+                
+                getmethodTotal();
+                
+                // Set column sizes
+                MethodTable.jTable1.setAutoResizeMode(MethodTable.jTable1.AUTO_RESIZE_NEXT_COLUMN);
+                TableColumnModel colModel = MethodTable.jTable1.getColumnModel();
+                colModel.getColumn(0).setPreferredWidth(25);
+                colModel.getColumn(1).setPreferredWidth(400);
+                colModel.getColumn(2).setPreferredWidth(35);
+                colModel.getColumn(3).setPreferredWidth(35);
+                colModel.getColumn(4).setPreferredWidth(35);
+                colModel.getColumn(5).setPreferredWidth(35);
+            }     
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(CM_ToolHOME.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void getmethodTotal() {
+        int total = 0;
+        for (int i = 0; i < MethodTable.jTable1.getRowCount(); i++) {
+            total = total + Integer.parseInt(MethodTable.jTable1.getValueAt(i, 5).toString());
+        }
+        
+        MethodTable.lbl_total_methods.setText(Integer.toString(total));
     }
 }

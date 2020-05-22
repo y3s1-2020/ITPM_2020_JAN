@@ -5,8 +5,14 @@
  */
 package size_Method_variable;
 
+import static ctrlStricture.CtrlTbl.jTable1;
 import ctrlStricture.CtrlWeight;
 import static home.CM_ToolHOME.jDesktopPane1;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -33,6 +39,7 @@ public class SizeTable extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setClosable(true);
         setMaximumSize(new java.awt.Dimension(699, 547));
@@ -60,6 +67,13 @@ public class SizeTable extends javax.swing.JInternalFrame {
 
         lbl_total_size.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
 
+        jButton1.setText("Print results as CSV");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -73,7 +87,9 @@ public class SizeTable extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(lbl_total_size, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)))
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -83,7 +99,8 @@ public class SizeTable extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton2)
-                        .addComponent(jLabel1))
+                        .addComponent(jLabel1)
+                        .addComponent(jButton1))
                     .addComponent(lbl_total_size, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -106,9 +123,40 @@ public class SizeTable extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        chooser.setDialogTitle("Specify a file name to save");
+        
+        int selection = chooser.showDialog(this, "Save");
+        
+        if (selection == JFileChooser.APPROVE_OPTION) {
+            File toSave = chooser.getSelectedFile();
+            
+            try {
+                FileWriter fw = new FileWriter(toSave);
+                BufferedWriter bw = new BufferedWriter(fw);
+                
+                for (int i = 0; i < jTable1.getRowCount(); i++) {
+                    for (int j = 0; j < jTable1.getColumnCount(); j++) {
+                        bw.write(jTable1.getValueAt(i, j).toString() + ", ");
+                    }
+                    bw.newLine();
+                }
+                bw.close();
+                fw.close();
+                
+                JOptionPane.showMessageDialog(this, "Done!");
+            }
+            catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     SizeWeight weight;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;

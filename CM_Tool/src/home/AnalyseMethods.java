@@ -9,6 +9,7 @@ import static home.CM_ToolHOME.path_lbl;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.StringTokenizer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -26,7 +27,36 @@ public class AnalyseMethods {
     }
     
     public static String totalComplexityDueToMethods(String line) {
-        return "0";
+        int Npdtp = 0;
+        int Ncdtp = 0;
+        int Wmrt = 0;
+        
+        String [] crrline = line.split(" ");
+        StringTokenizer token = new StringTokenizer(line);
+                
+        //Reading word by word
+        while(token.hasMoreTokens()) {
+                    
+            String word = token.nextToken();
+
+            //Finding class identifiers
+            if((word.equals("public") || word.equals("private")) && word.equals("void")) {
+                Wmrt = 0;
+            }
+                    
+            if((word.equals("public") || word.equals("private")) && (word.equals("boolean") || word.equals("char") || word.equals("byte") || word.equals("short") || word.equals("int") || word.equals("long") || word.equals("float") || word.equals("double"))) {
+                Npdtp = Npdtp + 1;
+            }
+                    
+            if((word.equals("public") || word.equals("private")) && (word.equals("char[]") || word.equals("byte[]") || word.equals("short[]") || word.equals("int[]") || word.equals("long[]") || word.equals("float[]") || word.equals("double[]") || word.equals("ArrayList") || word.equals("LinkedList") || word.equals("Stack") || word.equals("HashTable") || word.equals("HashSet") || word.equals("HashTree"))) {
+                Ncdtp = Ncdtp + 1;
+            }
+        }
+        
+        int Cm = Wmrt + Npdtp + (Ncdtp * 2);
+        
+        return String.valueOf(Cm);
+//return "0";
     }
     
     public static String totalComplexityDueToInheritance(String line) {

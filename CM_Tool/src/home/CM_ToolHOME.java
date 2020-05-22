@@ -5,23 +5,20 @@
  */
 package home;
 
-import static Coupling.CouplingMethods.coupling;
-import Coupling.CouplingTbl;
-import Inheritance.InheritanceMethods;
+//import static Coupling.CouplingMethods.coupling;
+//import Coupling.CouplingTbl;
+import Coupling.coupling;
 import Inheritance.InheriteShow_Page;
-import cm_tool.Methods;
 import ctrlStricture.CtrlMethods;
 import ctrlStricture.CtrlTbl;
 import static home.AnalyseMethods.totalComplexity;
-import static home.Analyse.jTable1;
-import static home.Analyse.lbl_total;
-//import size_Method_variable.Size;
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.net.URI;
+import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
@@ -45,7 +42,7 @@ import size_Method_variable.Variables;
 public class CM_ToolHOME extends javax.swing.JFrame {
 
     Analyse analyse;
-    
+
     /**
      * Creates new form NewJFrametest1
      */
@@ -524,7 +521,7 @@ public class CM_ToolHOME extends javax.swing.JFrame {
 
     private void analyise_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analyise_btnActionPerformed
         String fullcode = jTextArea1.getText();
-        
+
         if (fullcode.isEmpty()) {     //check weather jtext area empty or not
             JFrame f = new JFrame();
             JOptionPane.showMessageDialog(f, "You should import a Text File for the text area !");
@@ -539,14 +536,22 @@ public class CM_ToolHOME extends javax.swing.JFrame {
             totalComplexity();
         }
     }//GEN-LAST:event_analyise_btnActionPerformed
-   
+
     private void btn_inheritActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inheritActionPerformed
-        String fullcode = jTextArea1.getText();
-        if (fullcode.isEmpty()) {     //chack wather jtext area empty or not
+         String fullcode = jTextArea1.getText();
+        //get Combobox selected item value to the variable
+        String combo = jComboBox1.getSelectedItem().toString();
+        int total = 1;
+        int finaltotal = 0;
+
+        //chack wather jtext area empty or not
+        if (fullcode.isEmpty()) {
             JFrame f = new JFrame();
             JOptionPane.showMessageDialog(f, "You should import a Text File for the text area !");
         } else {
-            if (in == null) {           //displaying the table inside the jDesktop pane
+
+            //displaying the table inside the jDesktop pane
+            if (in == null) {
                 jDesktopPane1.removeAll();
                 InheriteShow_Page i = new InheriteShow_Page();
                 jDesktopPane1.add(i).setVisible(true);
@@ -556,13 +561,154 @@ public class CM_ToolHOME extends javax.swing.JFrame {
 
             }
 
-            InheritanceMethods.inheritance();
-            
+            //Chack using the combo box
+            if (combo.equals("C++")) {
+
+                //Complexity due to Inheritance of a C++ code
+                Pattern p1 = Pattern.compile(" : public");
+                Matcher m1 = p1.matcher(fullcode);
+
+                Pattern p8 = Pattern.compile(" : protected");
+                Matcher m8 = p8.matcher(fullcode);
+
+                Pattern p9 = Pattern.compile(" : private");
+                Matcher m9 = p9.matcher(fullcode);
+
+                Pattern p10 = Pattern.compile(" : abstract");
+                Matcher m10 = p10.matcher(fullcode);
+
+                Pattern p11 = Pattern.compile(" : static");
+                Matcher m11 = p11.matcher(fullcode);
+
+                Pattern p12 = Pattern.compile(" : final");
+                Matcher m12 = p12.matcher(fullcode);
+
+                Pattern p13 = Pattern.compile(" : synchronized");
+                Matcher m13 = p13.matcher(fullcode);
+
+                Pattern p14 = Pattern.compile(" : volatile");
+                Matcher m14 = p14.matcher(fullcode);
+
+                //C++ child found
+                while (m1.find() || m8.find() || m9.find() || m10.find() || m11.find() || m12.find() || m13.find() || m14.find()) {
+
+                    total = total + 1;
+                    finaltotal = total - 1;
+                }
+                System.out.println("C++ complexity due to Inheritance : " + finaltotal);
+
+                table();  //table methode for c++
+
+            } else if (combo.equals("Java")) {  //Complexity due to Inheritance of a Java code
+
+                Pattern p2 = Pattern.compile(" extends ");
+                Matcher m2 = p2.matcher(fullcode);
+
+                //Java child found
+                while (m2.find()) {
+
+                    total = total + 1;
+                    finaltotal = total - 1;
+
+                }
+
+                System.out.println("java complexity due to inheritance : " + finaltotal);
+
+                table();  //Table method for Displying table
+
+            } else {
+                System.out.println(jComboBox1.getSelectedItem().toString() + "Cheack your upload cord is wirte or wrong");
+            }
+
             //Displying the tip 
             tipFor_lbl.setText("Total inheritances (Ti) = No of direct inheritances (Ndi) + No of indirect inheritances (Nidi)");
+
+            //displying total inherite clculation in jlable
+            InheriteShow_Page.total_inherit.setText(" " + finaltotal);
+
         }
     }//GEN-LAST:event_btn_inheritActionPerformed
 
+    //Displying textarea values into jtable
+    public void table() {
+
+        int count = 1; // number of conditions in single line
+        int finaltotal = 0;
+
+        // Weights for each control 
+        int noInherite = 0;
+        int directinherie = 1;
+        int inDerectInherite = 1;
+
+        //calculate cN
+        int valNothing = noInherite * count;
+        int valDInherite = directinherie * count;
+        int valINdirectIN = inDerectInherite * count;
+
+        int finaltot = valDInherite + valINdirectIN;
+
+        //convert to string
+        String nC = String.valueOf(finaltot);
+//        String ndi = String.valueOf(directinherie);
+//        String nidi = String.valueOf(inDerectInherite);
+
+        //convert calculated values
+        String valNo = String.valueOf(valNothing);
+        String valDin = String.valueOf(valDInherite);
+        String valInD = String.valueOf(valINdirectIN);
+        String valtot = String.valueOf(finaltot);
+
+        String filepath = path_lbl.getText(); //get file path
+        File file = new File(filepath); //create new object for file
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            //Create table heading for column
+            String[] colNames = {"Count", "ClassName", "NDI", "NIDI", "Total", "CN"};
+
+            DefaultTableModel model = (DefaultTableModel) InheriteShow_Page.jTable1.getModel();
+            model.setColumnIdentifiers(colNames);
+
+            Object[] lines = br.lines().toArray();
+
+            // read and find the inherite classes from file line by line and check for the Inheritance
+            for (int i = 1; i <= lines.length; i++) {
+
+                String line = lines[i].toString(); //for code print
+                String col = String.valueOf(i); // for number count
+
+                String[] crinline = line.split("");
+                StringTokenizer token = new StringTokenizer(line);
+
+                while (token.hasMoreTokens()) {
+                    String word = token.nextToken();
+
+                    if (word.equals("class") || word.equals("Class")) {
+
+                        //to find and set regex value-inherited class(table value)
+                        String[] data = {col, line, valDin, valInD, valtot, nC};
+                        model.addRow(data);
+                    }
+
+                }
+
+                // Set column sizes
+                InheriteShow_Page.jTable1.setAutoResizeMode(InheriteShow_Page.jTable1.AUTO_RESIZE_NEXT_COLUMN);
+                TableColumnModel colModel = InheriteShow_Page.jTable1.getColumnModel();
+                colModel.getColumn(0).setPreferredWidth(25);
+                colModel.getColumn(1).setPreferredWidth(400);
+                colModel.getColumn(2).setPreferredWidth(35);
+                colModel.getColumn(3).setPreferredWidth(25);
+                colModel.getColumn(4).setPreferredWidth(50);
+                colModel.getColumn(5).setPreferredWidth(25);
+            }
+
+        } catch (Exception e) {
+
+        }
+
+    }
+    
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
 
         Desktop browser = Desktop.getDesktop();      //link with git hub page
@@ -597,9 +743,9 @@ public class CM_ToolHOME extends javax.swing.JFrame {
                 jDesktopPane1.removeAll();
                 jDesktopPane1.add(in).setVisible(true);
             }
-            
+
             AllMethods.sizeMethod();
-            
+
             // show the calculation
             tipFor_lbl.setText("Cs = (Wkw * Nkw) + (Wid * Nid) + (Wop * Nop) + (Wnv * Nnv) + (Wsl * Nsl)");
         }
@@ -612,17 +758,9 @@ public class CM_ToolHOME extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(f, "You should import a Text File for the text area !");
         } else {
 
-            if (cop == null) {
-                jDesktopPane1.removeAll();
-                CouplingTbl tbl = new CouplingTbl();
-                jDesktopPane1.add(tbl).setVisible(true);
-            } else {
-                jDesktopPane1.removeAll();
-                jDesktopPane1.add(cop).setVisible(true);
-            }
-            
-            coupling();
-            
+            Coupling.coupling c1 = new coupling();
+            c1.setVisible(true);
+
             tipFor_lbl.setText("Ccp = (Wr * Nr) + (Wmcms * Nmcms) + (Wmcmd * Nmcmd) + (Wmcrms * Nmcrms) + (Wmcrmd * Nmcrmd) + (Wrmcrms * Nrmcrms) + (Wrmcrmd *Nrmcrmd) + (Wrmcms * Nrmcms) + (Wrmcmd * Nrmcmd) + (Wmrgvs *Nmrgvs) + (Wmrgvd * Nmrgvd) + (Wrmrgvs * Nrmrgvs) + (Wrmrgvd * Nrmrgvd)");
         }
     }//GEN-LAST:event_btn_couplingActionPerformed
@@ -644,7 +782,7 @@ public class CM_ToolHOME extends javax.swing.JFrame {
                 jDesktopPane1.add(ctrl).setVisible(true);
             }
             CtrlMethods.ctrlStructures();
-            
+
             // Show the calculation
             tipFor_lbl.setText("Ccs = (Wtcs * NC) + Ccspps");
         }
@@ -692,7 +830,7 @@ public class CM_ToolHOME extends javax.swing.JFrame {
             }
 
             methods();
-            
+
             tipFor_lbl.setText("Cm = Wmrt + (Wpdtp * Npdtp) + (Wcdtp * Ncdtp)");
         }
     }//GEN-LAST:event_btn_methodActionPerformed
@@ -738,7 +876,7 @@ public class CM_ToolHOME extends javax.swing.JFrame {
     Variables var;
 
     CtrlTbl ctrl;
-    CouplingTbl cop;
+    coupling cop;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Abouthus;

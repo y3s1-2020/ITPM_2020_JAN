@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.StringTokenizer;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -212,7 +213,7 @@ public class InheritanceWeight extends javax.swing.JInternalFrame {
             this.dispose();
         }
         
-        ctrlStructures();
+        inheritance();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -228,7 +229,7 @@ public class InheritanceWeight extends javax.swing.JInternalFrame {
             this.dispose();
         }
         
-        ctrlStructures();
+        inheritance();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -239,45 +240,50 @@ public class InheritanceWeight extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
 
-    public void ctrlStructures() {
-        // get values of weights
-        String wtcsIfElse = jTextField1.getText(); // A conditional control structure such as an 'if' or 'else-if' condition
-        String wtcsForWhile = jTextField2.getText(); // An iterative control structure such as a 'for', 'while', or 'do-while' loop
-        String wtcsSwitch = jTextField3.getText(); // The 'switch' statement in a 'switch-case' control structure 
-        String wtcsCase = jTextField4.getText(); // Each 'case' statement in a 'switch-case' control structure
+    public void inheritance() {
+        //get values from weights
+        String noInherite = jTextField1.getText();  //A class with no inheritance ( direct or indirect)
+        String oneUDclass = jTextField2.getText(); //A class inheriting (directly or indirectly) from one user-defined class.
+        String twoUDclass = jTextField3.getText(); //A class inheriting (directly or indirectly) from two user-defined classes.
+        String threeUDclass = jTextField4.getText();//A class inheriting (directly or indirectly) from three user-difined classes.
+        String morethantreeuser = jTextField5.getText();//A class inheriting (directly or indirectly) from more than three user defined.
 
-        // number of conditions in single line
+        //number of continuation in single line 
         int count = 1;
-        
+
         // Weights for each control structure
-        int forIfElse = Integer.parseInt(wtcsIfElse);
-        int forForWhile = Integer.parseInt(wtcsForWhile);
-        int forSwitch = Integer.parseInt(wtcsSwitch);
-        int forCase = Integer.parseInt(wtcsCase);
-        int noCtrl = 0;
-        
-        // complexity of previous program
-        int previous = 0;
-        
-        // calculate ccs
-        int valIfElse = forIfElse * count;
-        int valForWhile = forForWhile * count;
-        int valSwitch = forSwitch * count;
-        int valCase = forCase * count;
-        int valNothing = noCtrl * count;
-        
-        // convert that values into string
-        String nc = String.valueOf(count);
-        String nothing = String.valueOf(noCtrl);
-        String ccspps = String.valueOf(previous);
-        
-        // convert calculated values into string
-        String ccsIfElse = String.valueOf(valIfElse);
-        String ccsForWhile = String.valueOf(valForWhile);
-        String ccsSwitch = String.valueOf(valSwitch);
-        String ccsCase = String.valueOf(valCase);
-        String ccsNothing = String.valueOf(valNothing);
-        
+        int forNoinrt = Integer.parseInt(noInherite);
+        int foroneUD = Integer.parseInt(oneUDclass);
+        int fortwoUD = Integer.parseInt(twoUDclass);
+        int forthrUD = Integer.parseInt(threeUDclass);
+        int forMorUDclass = Integer.parseInt(morethantreeuser);
+
+        //calculate result
+        int valuNOinherite = forNoinrt + count;
+        int valueoneHerite = foroneUD + count;
+        int valuetwoHerite = fortwoUD + count;
+        int valuethreeHerite = forthrUD + count;
+        int valueforeHerote = forMorUDclass + count;
+
+        //get values and Calculate for equation 
+        int direct = valueoneHerite;
+        int indirect = valuetwoHerite + valuethreeHerite + valueforeHerote;
+        int total = direct + indirect;
+
+        //convert values into strings
+        String nc = String.valueOf(total);
+//        String non = String.valueOf(noIn);
+//        String pre = String.valueOf(previous);
+//        String forone = String.valueOf(foroneUD);
+//        String fortwo = String.valueOf(fortwoUD);
+//        String forthree = String.valueOf(forthrUD);
+//        String formore = String.valueOf(forMorUDclass);
+        // convert  string
+        String noInheritance = String.valueOf(valuNOinherite);
+        String oneInheritance = String.valueOf(direct);
+        String twoInheritance = String.valueOf(indirect);
+        String tot = String.valueOf(total);
+
         // get file path to the uploaded file
         String filepath = path_lbl.getText();
 
@@ -285,53 +291,38 @@ public class InheritanceWeight extends javax.swing.JInternalFrame {
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
+            //Create table heading for column
+            String[] colNames = {"Count", "ClassName", "NDI", "NIDI", "Total", "CN"};
 
-            // give the table header
-            String[] colNames = {"#", "Line", "Wtcs", "NC", "Ccspps", "Ccs"};
-
-            DefaultTableModel model = (DefaultTableModel) CtrlTbl.jTable1.getModel();
-
+            DefaultTableModel model = (DefaultTableModel) InheriteShow_Page.jTable1.getModel();
             model.setColumnIdentifiers(colNames);
 
             Object[] lines = br.lines().toArray();
 
-            // read the file line by line and check for the control structures
+            // read and find the inherite classes from file line by line and check for the Inheritance
             for (int i = 1; i <= lines.length; i++) {
-                String line = lines[i].toString();
 
-                String col = String.valueOf(i);
+                String line = lines[i].toString(); //for code print
+                String col = String.valueOf(i); // for number count
 
-                // A conditional control structure such as an 'if' or 'else-if' condition
-                if (line.contains(" if") || line.contains(" else if")) {
-                    String[] data = {col, line, wtcsIfElse, nc, ccspps, ccsIfElse};
-                    model.addRow(data);
-                }
+                String[] crinline = line.split("");
+                StringTokenizer token = new StringTokenizer(line);
 
-                // An iterative control structure such as a 'for', 'while', or 'do-while' loop
-                if (line.contains(" for") || line.contains(" while") || line.contains(" do")) {
-                    String[] data = {col, line, wtcsForWhile, nc, ccspps, ccsForWhile};
-                    model.addRow(data);
-                }
+                while (token.hasMoreTokens()) {
+                    String word = token.nextToken();
 
-                // The 'switch' statement in a 'switch-case' control structure 
-                if (line.contains(" switch")) {
-                    String[] data = {col, line, wtcsSwitch, nc, ccspps, ccsSwitch};
-                    model.addRow(data);
-                }
+                    if (word.equals("class") || word.equals("Class")) {
 
-                // Each 'case' statement in a 'switch-case' control structure
-                if (line.contains(" case")) {
-                    String[] data = {col, line, wtcsCase, nc, ccspps, ccsCase};
-                    model.addRow(data);
-                } // Lines without any control structure
-                else {
-                    String[] data = {col, line, nothing, "0", ccspps, ccsNothing};
-                    model.addRow(data);
+                        //to find and set regex value-inherited class(table value)
+                        String[] data = {col, line, oneInheritance, twoInheritance, tot, nc};
+                        model.addRow(data);
+                    }
+
                 }
 
                 // Set column sizes
-                CtrlTbl.jTable1.setAutoResizeMode(CtrlTbl.jTable1.AUTO_RESIZE_NEXT_COLUMN);
-                TableColumnModel colModel = CtrlTbl.jTable1.getColumnModel();
+                InheriteShow_Page.jTable1.setAutoResizeMode(InheriteShow_Page.jTable1.AUTO_RESIZE_NEXT_COLUMN);
+                TableColumnModel colModel = InheriteShow_Page.jTable1.getColumnModel();
                 colModel.getColumn(0).setPreferredWidth(25);
                 colModel.getColumn(1).setPreferredWidth(400);
                 colModel.getColumn(2).setPreferredWidth(35);
@@ -339,9 +330,11 @@ public class InheritanceWeight extends javax.swing.JInternalFrame {
                 colModel.getColumn(4).setPreferredWidth(50);
                 colModel.getColumn(5).setPreferredWidth(25);
             }
-        } catch (FileNotFoundException e) {
-            System.out.println(e);
+
+        } catch (Exception e) {
+
         }
+        InheriteShow_Page.total_inherit.setText(" " + total);
     }
     
     CM_ToolHOME h;

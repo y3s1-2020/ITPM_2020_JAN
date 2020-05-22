@@ -31,8 +31,8 @@ public class InheriteShow_Page extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
         setMaximizable(true);
@@ -45,93 +45,10 @@ public class InheriteShow_Page extends javax.swing.JInternalFrame {
         jTable1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "", "", "", "", ""},
-                {"2", "Years", "0", "0", "0", "0"},
-                {"3", null, null, null, null, null},
-                {"4", null, null, null, null, null},
-                {"5", null, null, null, null, null},
-                {"6", null, null, null, null, null},
-                {"7", null, null, null, null, null},
-                {"8", null, null, null, null, null},
-                {"9", null, null, null, null, null},
-                {"10", null, null, null, null, null},
-                {"11", null, null, null, null, null},
-                {"12", null, null, null, null, null},
-                {"13", null, null, null, null, null},
-                {"14", "Months", "1", "0", "1", "1"},
-                {"15", null, null, null, null, null},
-                {"16", null, null, null, null, null},
-                {"17", null, null, null, null, null},
-                {"18", null, null, null, null, null},
-                {"19", null, null, null, null, null},
-                {"20", null, null, null, null, null},
-                {"21", null, null, null, null, null},
-                {"22", null, null, null, null, null},
-                {"23", null, null, null, null, null},
-                {"24", null, null, null, null, null},
-                {"25", "", null, null, null, null},
-                {"26", "DaysPerMonth ", "1", "2", "3", "3"},
-                {"27", null, null, null, null, null},
-                {"28", null, null, null, null, null},
-                {"29", null, null, null, null, null},
-                {"30", null, null, null, null, null},
-                {"31", null, null, null, null, null},
-                {"32", null, null, null, null, null},
-                {"33", null, null, null, null, null},
-                {"34", null, null, null, null, null},
-                {"35", null, null, null, null, null},
-                {"36", null, null, null, null, null},
-                {"37", null, null, null, null, null},
-                {"38", null, null, null, null, null},
-                {"39", null, null, null, null, null},
-                {"40", null, null, null, null, null},
-                {"41", null, null, null, null, null},
-                {"42", null, null, null, null, null},
-                {"43", null, null, null, null, null},
-                {"44", null, null, null, null, null},
-                {"45", null, null, null, null, null},
-                {"46", null, null, null, null, null},
-                {"47", null, null, null, null, null},
-                {"48", null, null, null, null, null},
-                {"49", null, null, null, null, null},
-                {"50", null, null, null, null, null},
-                {"51", null, null, null, null, null},
-                {"52", null, null, null, null, null},
-                {"53", null, null, null, null, null},
-                {"54", null, null, null, null, null},
-                {"55", null, null, null, null, null},
-                {"56", null, null, null, null, null},
-                {"57", null, null, null, null, null},
-                {"58", null, null, null, null, null},
-                {"59", null, null, null, null, null},
-                {"60", null, null, null, null, null},
-                {"61", null, null, null, null, null},
-                {"62", null, null, null, null, null},
-                {"63", null, null, null, null, null},
-                {"64", null, null, null, null, null},
-                {"65", null, null, null, null, null},
-                {"66", null, null, null, null, null},
-                {"67", null, null, null, null, null},
-                {"68", null, null, null, null, null},
-                {"69", null, null, null, null, null},
-                {"70", null, null, null, null, null},
-                {"71", null, null, null, null, null},
-                {"72", null, null, null, null, null},
-                {"73", null, null, null, null, null},
-                {"74", null, null, null, null, null},
-                {"75", null, null, null, null, null},
-                {"76", null, null, null, null, null},
-                {"77", null, null, null, null, null},
-                {"78", null, null, null, null, null},
-                {"79", null, null, null, null, null},
-                {"80", null, null, null, null, null},
-                {"81", null, null, null, null, null},
-                {"82", null, null, null, null, null},
-                {"83", null, null, null, null, null},
-                {"84", null, null, null, null, null}
+
             },
             new String [] {
-                "COUNT", "CLASS NAME", "NDI", "NIDI", "TOTAL", "CI"
+
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -143,15 +60,25 @@ public class InheriteShow_Page extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setText("Total complexity due to inheritance :");
+
+        total_inherit.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 730, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(total_inherit, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,7 +86,12 @@ public class InheriteShow_Page extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(total_inherit, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();
@@ -182,7 +114,9 @@ public class InheriteShow_Page extends javax.swing.JInternalFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    public javax.swing.JTable jTable1;
+    public static final javax.swing.JTable jTable1 = new javax.swing.JTable();
+    public static final javax.swing.JLabel total_inherit = new javax.swing.JLabel();
     // End of variables declaration//GEN-END:variables
 }
