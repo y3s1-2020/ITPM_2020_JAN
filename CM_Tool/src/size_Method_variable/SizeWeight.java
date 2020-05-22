@@ -13,6 +13,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
@@ -23,7 +28,7 @@ import javax.swing.table.TableColumnModel;
  */
 public class SizeWeight extends javax.swing.JInternalFrame {
 
-    CtrlTbl tbl;
+    SizeTable tbl;
     
     /**
      * Creates new form CtrlWeight
@@ -192,7 +197,7 @@ public class SizeWeight extends javax.swing.JInternalFrame {
         // Return to the previous intrface
         if (tbl == null) {
             jDesktopPane1.removeAll();
-            CtrlTbl x = new CtrlTbl();
+            SizeTable x = new SizeTable();
             jDesktopPane1.add(x).setVisible(true);
             this.dispose();
         } else {
@@ -201,133 +206,185 @@ public class SizeWeight extends javax.swing.JInternalFrame {
             this.dispose();
         }
         
-        ctrlStructures();
+        sizeMethod();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // Go back to the previous interface
-        if (tbl == null) {
-            jDesktopPane1.removeAll();
-            CtrlTbl x = new CtrlTbl();
-            jDesktopPane1.add(x).setVisible(true);
-            this.dispose();
-        } else {
-            jDesktopPane1.removeAll();
-            jDesktopPane1.add(tbl).setVisible(true);
-            this.dispose();
-        }
+    public void sizeMethod() {
+    
+        //FOR SIZE CALCULATION
+    
+        String VforKeyWords  = jTextField1.getText();
+        String VforIdentifiers  = jTextField2.getText();
+        String VforOperators  = jTextField3.getText();
+        String VforNumericalValues  = jTextField4.getText();
+        String VforStringLiterals  = jTextField5.getText();
         
-        ctrlStructures();
-    }//GEN-LAST:event_jButton1ActionPerformed
+        //Default weights for each size component
+        int Wkw = Integer.parseInt(VforKeyWords);
+        int Wid = Integer.parseInt(VforIdentifiers);
+        int Wop = Integer.parseInt(VforOperators);
+        int Wnv = Integer.parseInt(VforNumericalValues);
+        int Wsl = Integer.parseInt(VforStringLiterals);
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+        //Number or size components
+        int Nkw = 0;
+        int Nid = 0;
+        int Nop = 0;
+        int Nnv = 0;
+        int Nsl = 0;
+        int Cs = 0;
 
-    public void ctrlStructures() {
-        // get values of weights
-        String wtcsIfElse = jTextField1.getText(); // A conditional control structure such as an 'if' or 'else-if' condition
-        String wtcsForWhile = jTextField2.getText(); // An iterative control structure such as a 'for', 'while', or 'do-while' loop
-        String wtcsSwitch = jTextField3.getText(); // The 'switch' statement in a 'switch-case' control structure 
-        String wtcsCase = jTextField4.getText(); // Each 'case' statement in a 'switch-case' control structure
-
-        // number of conditions in single line
-        int count = 1;
-        
-        // Weights for each control structure
-        int forIfElse = Integer.parseInt(wtcsIfElse);
-        int forForWhile = Integer.parseInt(wtcsForWhile);
-        int forSwitch = Integer.parseInt(wtcsSwitch);
-        int forCase = Integer.parseInt(wtcsCase);
-        int noCtrl = 0;
-        
-        // complexity of previous program
-        int previous = 0;
-        
-        // calculate ccs
-        int valIfElse = forIfElse * count;
-        int valForWhile = forForWhile * count;
-        int valSwitch = forSwitch * count;
-        int valCase = forCase * count;
-        int valNothing = noCtrl * count;
-        
-        // convert that values into string
-        String nc = String.valueOf(count);
-        String nothing = String.valueOf(noCtrl);
-        String ccspps = String.valueOf(previous);
-        
-        // convert calculated values into string
-        String ccsIfElse = String.valueOf(valIfElse);
-        String ccsForWhile = String.valueOf(valForWhile);
-        String ccsSwitch = String.valueOf(valSwitch);
-        String ccsCase = String.valueOf(valCase);
-        String ccsNothing = String.valueOf(valNothing);
-        
-        // get file path to the uploaded file
+        //Getting the filepath
         String filepath = path_lbl.getText();
 
         File file = new File(filepath);
 
         try {
+
             BufferedReader br = new BufferedReader(new FileReader(file));
 
             // give the table header
-            String[] colNames = {"#", "Line", "Wtcs", "NC", "Ccspps", "Ccs"};
+            String[] colNames = {"#", "Line", "Nkw", "Nid", "Nop", "Nnv", "Nsl", "Cs"};
 
-            DefaultTableModel model = (DefaultTableModel) CtrlTbl.jTable1.getModel();
+            DefaultTableModel model = (DefaultTableModel) SizeTable.jTable1.getModel();
 
             model.setColumnIdentifiers(colNames);
 
             Object[] lines = br.lines().toArray();
 
-            // read the file line by line and check for the control structures
-            for (int i = 1; i <= lines.length; i++) {
+            //Reading the file line by line
+            for (int i = 0; i <= lines.length; i++) {
                 String line = lines[i].toString();
 
                 String col = String.valueOf(i);
 
-                // A conditional control structure such as an 'if' or 'else-if' condition
-                if (line.contains(" if") || line.contains(" else if")) {
-                    String[] data = {col, line, wtcsIfElse, nc, ccspps, ccsIfElse};
-                    model.addRow(data);
+                String[] crrline = line.split(" ");
+                StringTokenizer token = new StringTokenizer(line);
+
+                while (token.hasMoreTokens()) {
+                    String word = token.nextToken();
+
+                    //Finding keywords
+                    if (word.equals("void") || word.equals("assert") || word.equals("break") || word.equals("catch") || word.equals("class") || word.equals("const") || word.equals("continue") || word.equals("default") || word.equals("else") || word.equals("enum") || word.equals("extends") || word.equals("final") || word.equals("finally") || word.equals("goto") || word.equals("implements") || word.equals("") || word.equals("import") || word.equals("instanceof") || word.equals("interface") || word.equals("native") || word.equals("new") || word.equals("private") || word.equals("protected") || word.equals("public") || word.equals("return") || word.equals("static") || word.equals("strictfp") || word.equals("super") || word.equals("synchronized") || word.equals("this") || word.equals("throw") || word.equals("throws") || word.equals("transient") || word.equals("try") || word.equals("volatile") || word.equals("false") || word.equals("true") || word.equals("null")) {
+                        Nkw = Nkw + 1;
+                    }
+
+                    //Finding class identifiers
+                    if (word.equals("class") && word.equals("public")) {
+                        Nid = Nid + 1;
+                    }
+
+                    //Finding method identifiers
+                    if (word.equals("public") || word.equals("private")) {
+                        Nid = Nid + 1;
+                    }
+
+                    //Finding variable identifiers
+                    if (word.equals("for") || word.equals("while") || word.equals("do") || word.equals("if") || word.equals("switch") || word.equals("case")) {
+                        if (word.equals("boolean") || word.equals("char") || word.equals("byte") || word.equals("short") || word.equals("int") || word.equals("long") || word.equals("float") || word.equals("couble") || word.equals("String")) {
+                            Nid = Nid + 1;
+                        }
+                    }
+
+                    //Finding object identifiers
+                    if (word.equals("new")) {
+                        Nid = Nid + 1;
+                    }
+
+                    //Finding data structure identifiers
+                    if (word.equals("collection") || word.equals("linkedlist") || word.equals("stack") || word.equals("hashset") || word.equals("hashtable") || word.equals("ArrayList") || word.equals("hashtree")) {
+                        Nid = Nid + 1;
+                    }
+
+                    //Finding operators
+                    if (word.equals("+") || word.equals("-") || word.equals("*") || word.equals("/") || word.equals("%") || word.equals("++") || word.equals("--") || word.equals("==") || word.equals("!=") || word.equals(">") || word.equals("<") || word.equals(">=") || word.equals("<=") || word.equals("&&") || word.equals("||") || word.equals("!") || word.equals("|") || word.equals("^") || word.equals("~") || word.equals("<<") || word.equals(">>") || word.equals(">>>") || word.equals("<<<") || word.equals(",") || word.equals("->") || word.equals(".") || word.equals("::") || word.equals("+=") || word.equals("-=") || word.equals("*=") || word.equals("/=") || word.equals("=") || word.equals(">>>=") || word.equals("|=") || word.equals("&=") || word.equals("%=") || word.equals("<<=") || word.equals(">>=") || word.equals("^=")) {
+                        Nop = Nop + 1;
+                    }
+
+                    //Finding numerical values
+                    if (word.equals("[0-9]")) {
+                        Nnv = Nnv + 1;
+                    }
+
+                    //Calculate weight for each component
+                    int valWkw = Wkw * Nkw;
+                    int valWid = Wid * Nid;
+                    int valWop = Wop * Nop;
+                    int valWnv = Wnv * Nnv;
+                    int valWsl = Wsl * Nsl;
+
+                    Cs = valWkw + valWid + valWop + valWnv + valWsl;
+
+                    //Finding string literals
+                    Pattern p3 = Pattern.compile("\"([^\"]*)\"");
+                    Matcher m3 = p3.matcher(word);
+
+                    while (m3.find()) {//String between double quotes found
+                        Nsl = Nsl + 1;
+                    }
+
                 }
 
-                // An iterative control structure such as a 'for', 'while', or 'do-while' loop
-                if (line.contains(" for") || line.contains(" while") || line.contains(" do")) {
-                    String[] data = {col, line, wtcsForWhile, nc, ccspps, ccsForWhile};
-                    model.addRow(data);
-                }
+                //Convert number of size compoenets to string
+                String sNkw = String.valueOf(Nkw);
+                String sNid = String.valueOf(Nid);
+                String sNop = String.valueOf(Nop);
+                String sNnv = String.valueOf(Nnv);
+                String sNsl = String.valueOf(Nsl);
+                String sCs = String.valueOf(Cs);
 
-                // The 'switch' statement in a 'switch-case' control structure 
-                if (line.contains(" switch")) {
-                    String[] data = {col, line, wtcsSwitch, nc, ccspps, ccsSwitch};
-                    model.addRow(data);
-                }
+                String[] data = {col, line, sNkw, sNid, sNop, sNnv, sNsl, sCs};
+                model.addRow(data);
 
-                // Each 'case' statement in a 'switch-case' control structure
-                if (line.contains(" case")) {
-                    String[] data = {col, line, wtcsCase, nc, ccspps, ccsCase};
-                    model.addRow(data);
-                } // Lines without any control structure
-                else {
-                    String[] data = {col, line, nothing, "0", ccspps, ccsNothing};
-                    model.addRow(data);
-                }
-
+                Nkw = 0; Nid = 0; Nop = 0; Nnv = 0; Nsl = 0;
+                
+                getSizeTotal();
+                
                 // Set column sizes
-                CtrlTbl.jTable1.setAutoResizeMode(CtrlTbl.jTable1.AUTO_RESIZE_NEXT_COLUMN);
-                TableColumnModel colModel = CtrlTbl.jTable1.getColumnModel();
+                SizeTable.jTable1.setAutoResizeMode(SizeTable.jTable1.AUTO_RESIZE_NEXT_COLUMN);
+                TableColumnModel colModel = SizeTable.jTable1.getColumnModel();
                 colModel.getColumn(0).setPreferredWidth(25);
                 colModel.getColumn(1).setPreferredWidth(400);
                 colModel.getColumn(2).setPreferredWidth(35);
-                colModel.getColumn(3).setPreferredWidth(25);
-                colModel.getColumn(4).setPreferredWidth(50);
-                colModel.getColumn(5).setPreferredWidth(25);
+                colModel.getColumn(3).setPreferredWidth(35);
+                colModel.getColumn(4).setPreferredWidth(35);
+                colModel.getColumn(5).setPreferredWidth(35);
+                colModel.getColumn(6).setPreferredWidth(35);
+                colModel.getColumn(7).setPreferredWidth(35);
             }
-        } catch (FileNotFoundException e) {
-            System.out.println(e);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(CM_ToolHOME.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public static void getSizeTotal() {
+        int total = 0;
+        for (int i = 0; i < SizeTable.jTable1.getRowCount(); i++) {
+            total = total + Integer.parseInt(SizeTable.jTable1.getValueAt(i, 7).toString());
+        }
+        
+        SizeTable.lbl_total_size.setText(Integer.toString(total));
+    }
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // Go back to the previous interface
+        if (tbl == null) {
+            jDesktopPane1.removeAll();
+            SizeTable x = new SizeTable();
+            jDesktopPane1.add(x).setVisible(true);
+            this.dispose();
+        } else {
+            jDesktopPane1.removeAll();
+            jDesktopPane1.add(tbl).setVisible(true);
+            this.dispose();
+        }
+        
+        sizeMethod();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
     
     CM_ToolHOME h;
     
