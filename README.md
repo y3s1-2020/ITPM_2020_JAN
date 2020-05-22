@@ -14,7 +14,7 @@ Devoloped by :
 
 About Project :
 
-CM_Tool is a code complexity measuring tool.It allows to upload and measure the complexity of a single, zip and unzip files. CM_Tool measures the code complexity of a software due 6 factors. They are:
+CM_Tool is a code complexity measuring tool.It allows to upload and measure the complexity of a single, zip and unzip files. It measure the code complexity for programs in JAVA language for all factora and c++ language for inheritance facotr. CM_Tool measures the code complexity of a software due 6 factors. They are:
 
               01. Size Factor
               02. Variables Factor
@@ -56,10 +56,26 @@ CM_Tool is a code complexity measuring tool.It allows to upload and measure the 
         * Inheritance factor measures the code complexity of a software based on program components such as 'direct inheritances' and 'indirect inheritances'.
         
         * Each program component carries a defaultly set weight, which is also allowed to be changed by the user as they wish by giving   keyboard inputs for the weights.
+        
+        *This function measures code complexity for programs in JAVA and C++ both.
 
 05. Control Structures
 
+        * Control Strucutres factor measures the code complexity of a software based on program components such as 'available control structures' and 'number of conditions in control structures'.
+        
+        * Each program component carries a defaultly set weight, which is also allowed to be changed by the user as they wish by giving   keyboard inputs for the weights.
+         
+        * This function allows the user to print the results of complexity due to variables as a CSV file.
+
+
 06. Coupling
+
+        * Coupling factor measures the code complexity of a software based on program componts such as 'recursive calls', 'regular methods', 'recursive methods'
+        
+        * Each program component carries a defaultly set weight, which is also allowed to be changed by the user as they wish by giving   keyboard inputs for the weights.
+        
+        *
+    
               
 
 
