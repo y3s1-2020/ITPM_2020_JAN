@@ -35,9 +35,27 @@ CM_Tool is a code complexity measuring tool.It allows to upload and measure the 
 
 02. Variables Factor
 
+        * Variables factor measures the code complexity of a software based on some program components such as 'global variables', 'local variables', 'variables with primitive data types', 'variables with composite variables'.
+       
+        * Each program component carries a defaultly set weight, which is also allowed to be changed by the user as they wish by giving   keyboard inputs for the weights.
+       
+        * The complexities of the files are shown in a ' tabular ' format.
+        
+        * This function allows the user to print the results of complexity due to variables as a CSV file.
+
 03. Methods Factor
 
+        * Methods factor measures the code complexity of a software based on some program components such as 'method return type' amd 'method parameter type'
+        
+         * Each program component carries a defaultly set weight, which is also allowed to be changed by the user as they wish by giving   keyboard inputs for the weights.
+         
+        * This function allows the user to print the results of complexity due to variables as a CSV file.
+
 04. Inheritance
+
+        * Inheritance factor measures the code complexity of a software based on program components such as 'direct inheritances' and 'indirect inheritances'.
+        
+        * Each program component carries a defaultly set weight, which is also allowed to be changed by the user as they wish by giving   keyboard inputs for the weights.
 
 05. Control Structures
 
